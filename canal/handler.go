@@ -13,8 +13,8 @@ type EventHandler interface {
 	OnTableChanged(schema string, table string) error
 	OnDDL(nextPos mysql.Position, queryEvent *replication.QueryEvent) error
 	OnRow(e *RowsEvent) error
-	OnXID(nextPos mysql.Position) error
-	OnGTID(gtid mysql.GTIDSet) error
+	OnXID(nextPos mysql.Position, event *replication.XIDEvent) error
+	OnGTID(gtid mysql.GTIDSet, event *replication.GTIDEvent) error
 	// OnPosSynced Use your own way to sync position. When force is true, sync position immediately.
 	OnPosSynced(pos mysql.Position, set mysql.GTIDSet, force bool) error
 	String() string
@@ -29,8 +29,8 @@ func (h *DummyEventHandler) OnDDL(nextPos mysql.Position, queryEvent *replicatio
 	return nil
 }
 func (h *DummyEventHandler) OnRow(*RowsEvent) error                                { return nil }
-func (h *DummyEventHandler) OnXID(mysql.Position) error                            { return nil }
-func (h *DummyEventHandler) OnGTID(mysql.GTIDSet) error                            { return nil }
+func (h *DummyEventHandler) OnXID(mysql.Position, *replication.XIDEvent) error     { return nil }
+func (h *DummyEventHandler) OnGTID(mysql.GTIDSet, *replication.GTIDEvent) error    { return nil }
 func (h *DummyEventHandler) OnPosSynced(mysql.Position, mysql.GTIDSet, bool) error { return nil }
 
 func (h *DummyEventHandler) String() string { return "DummyEventHandler" }
