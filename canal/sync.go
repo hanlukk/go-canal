@@ -16,7 +16,7 @@ import (
 
 func (c *Canal) startSyncer() (*replication.BinlogStreamer, error) {
 	gset := c.master.GTIDSet()
-	if gset == nil || gset.String() == "" {
+	if gset == nil {
 		pos := c.master.Position()
 		s, err := c.syncer.StartSync(pos)
 		if err != nil {
