@@ -136,7 +136,7 @@ func (c *Canal) runSyncBinlog() error {
 			if err != nil {
 				return errors.Trace(err)
 			}
-			if err := c.eventHandler.OnGTID(gtid, e); err != nil {
+			if err := c.eventHandler.OnGTID(gtid, ev); err != nil {
 				return errors.Trace(err)
 			}
 		case *replication.QueryEvent:
